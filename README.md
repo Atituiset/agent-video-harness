@@ -42,12 +42,9 @@ agent 会走官方 faceless-explainer 流水线（脚手架 → 设计预设 →
 
 配套资产：
 
-| 路径 | 用途 |
-|---|---|
-| `skills/bilingual-tech-explainer/` | 技能本体（含 `scripts/gen-voice.py`，edge-tts 词边界配音） |
-| `recipes/agent-harness-explainer/` | 冻结配方：code-editorial 设计预设 + 分镜骨架，新项目可直接采纳 |
-| `examples/reference-case-frame.html` | 案例帧参考实现（见 `examples/README.md`） |
-| `docs/pitfalls.md` | 完整踩坑清单（派任务前让 agent 先读） |
+技能目录完全自包含：`skills/bilingual-tech-explainer/` 内的
+`scripts/gen-voice.py`（edge-tts 词边界配音）、`recipes/`（code-editorial 设计预设 + 分镜骨架）、
+`examples/`（案例帧参考实现）、`references/pitfalls.md`（26 条踩坑清单）会随安装一起落地。
 
 ## 目录约定
 

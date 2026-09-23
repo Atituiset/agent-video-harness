@@ -7,10 +7,10 @@ description: 把技术文章/调研文档做成中英双语程序员科普视频
 
 把一篇技术文章做成中英两支 1920×1080 科普视频。**核心流水线走官方 `/faceless-explainer` 技能**（先加载它和 `/hyperframes`；没有则 `npx skills add heygen-com/hyperframes --skill faceless-explainer`）。本技能只定义差异层，全部规则来自一次完整实战的返工沉淀，自包含、不依赖任何外部工程。
 
-仓库自带三样配套资产（以 `<REPO>` 指代本仓库根目录）：
-- `<REPO>/recipes/agent-harness-explainer/` — 冻结配方（设计预设 + BRIEF 骨架 + 分镜骨架），可用 `node <media-use>/scripts/recipe.mjs use --hyperframes . --name agent-harness-explainer` 采纳，或手动把 `frame.md` 拷入新工程
-- `<REPO>/examples/reference-case-frame.html` — 案例帧参考实现（结构/计时/rail/字幕避让的抄写对象；详见 `<REPO>/examples/README.md`）
-- `<REPO>/docs/pitfalls.md` — 完整踩坑清单（派发任务给任何 agent 时让它先读）
+本技能目录自带三样配套资产（以 `<SKILL_DIR>` 指代本技能目录）：
+- `<SKILL_DIR>/recipes/agent-harness-explainer/` — 冻结配方（设计预设 + BRIEF 骨架 + 分镜骨架），可用 `node <media-use>/scripts/recipe.mjs use --hyperframes . --name agent-harness-explainer` 采纳，或手动把 `frame.md` 拷入新工程
+- `<SKILL_DIR>/examples/reference-case-frame.html` — 案例帧参考实现（结构/计时/rail/字幕避让的抄写对象；详见 `<SKILL_DIR>/examples/README.md`）
+- `<SKILL_DIR>/references/pitfalls.md` — 完整踩坑清单（派发任务给任何 agent 时让它先读）
 
 ## 与官方工作流的差异
 
