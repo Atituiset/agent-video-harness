@@ -1,58 +1,59 @@
 # agent-video-harness
 
-把技术文章做成**中英双语程序员科普视频**的开源工作流。基于 [HyperFrames](https://hyperframes.heygen.com)（HTML 即视频源）+ edge-tts/Kokoro 配音 + Whisper 级字幕对齐，全部流程可被任何 coding agent（Kimi Code / Claude Code / OpenCode / Codex 等）驱动。
+**[中文文档](README.zh-CN.md)** · English
 
-实战产出（本仓库方法的完整案例）：《从一次 LLM 调用到完整 Harness，Agent 到底经历了什么？》双语科普视频（17 帧 / zh 3m33s / en 3m10s，覆盖 LLM→上下文→ReAct→工具调用→记忆→Harness 演化主线 + Pi/OpenCode/Codex/Hermes/Claude Code/DeepSeek Harness/Grok Build/Kimi Code 八家对比 + 九家定位总览图）。
+An open-source workflow that turns technical articles into **bilingual (zh+en) explainer videos for programmers**. Built on [HyperFrames](https://hyperframes.heygen.com) (HTML-as-video) + edge-tts/Kokoro narration + native word-boundary captions. The entire pipeline is drivable by any coding agent (Kimi Code / Claude Code / OpenCode / Codex …).
 
-## 特性
+Proven in production: *"From One LLM Call to a Full Harness"* — a 17-frame bilingual explainer (zh 3m33s / en 3m10s) covering the LLM → context → ReAct → tool-calling → memory → Harness evolution, eight real harnesses (Pi / OpenCode / Codex / Hermes / Claude Code / DeepSeek Harness / Grok Build / Kimi Code), and a nine-way positioning map.
 
-- **双语独立工程**：zh / en 各自独立时间轴，中文 edge-tts（晓晓）+ 英文 Kokoro（af_sky），字幕用 TTS 原生词边界对齐，不走 Whisper
-- **连贯性三件套**：全片演化进度 rail、每帧 0.45s 开场舞台骨架、边界卡片母题——专治"赶场/幻灯片感"
-- **叙事骨架**：撞墙 → 补墙（每一层工程复杂性的出现都有原因）
-- **全套踩坑清单**：箭头三律、CJK 字体子集化、WCAG ghost text、seek 安全等 20+ 条实战规则
-- **跨 agent 可复用**：技能是纯 Markdown + CLI 脚本，任何会跑 shell 的 agent 都能驱动（已实测 Kimi Code 与 OpenCode 互操作）
+## Features
 
-## 安装
+- **Independent bilingual projects** — zh/en timelines stay separate; Chinese narration via edge-tts (Xiaoxiao), English via Kokoro (af_sky); captions aligned from native TTS word boundaries, no Whisper needed
+- **Continuity toolkit** — a persistent evolution rail, stage scaffolding within the first 0.45s of every frame, and a "wall card" motif; cures the rushed-slideshow feel
+- **Narrative spine** — wall → fix: every engineering layer appears *for a reason*
+- **26 hard-won rules** — arrow geometry, CJK font subsetting, WCAG ghost text, seek-safety, and more (`references/pitfalls.md`)
+- **Agent-agnostic** — the skill is plain Markdown + CLI scripts; any agent that can run a shell can drive it (verified with Kimi Code and OpenCode)
 
-前提：`npx hyperframes` CLI 可用（见 HyperFrames 文档）。
+## Install
 
-把技能装进你的 agent（任选其一）：
+Prerequisite: the `npx hyperframes` CLI (see HyperFrames docs).
 
 ```bash
-# Kimi Code / 通用 agents 目录
-cp -r skills/bilingual-tech-explainer ~/.agents/skills/
+# via the skills CLI (recommended)
+npx skills add Atituiset/agent-video-harness --skill bilingual-tech-explainer
 
-# Claude Code
-cp -r skills/bilingual-tech-explainer ~/.claude/skills/
-
-# OpenCode
-cp -r skills/bilingual-tech-explainer ~/.config/opencode/skills/
+# or copy manually
+cp -r skills/bilingual-tech-explainer ~/.agents/skills/          # Kimi Code / generic
+cp -r skills/bilingual-tech-explainer ~/.claude/skills/          # Claude Code
+cp -r skills/bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
 ```
 
-同时确保官方工作流在位：`npx skills add heygen-com/hyperframes --skill faceless-explainer`。
+Also make sure the official workflow is installed: `npx skills add heygen-com/hyperframes --skill faceless-explainer`.
 
-## 使用
+## Usage
 
-对你的 agent 说：
+Tell your agent:
 
-> 读 bilingual-tech-explainer 技能，把这篇文章（附路径/链接）做成中英双语科普视频，
-> 发布到 B站和 YouTube。工作目录 videos/<工程名>。
+> Read the bilingual-tech-explainer skill and turn this article (path/URL) into a bilingual explainer video for Bilibili and YouTube. Working directory: videos/<project>.
 
-agent 会走官方 faceless-explainer 流水线（脚手架 → 设计预设 → 分镜脚本 → 配音 → 子代理建帧 → 装配 → 校验 → 渲染），差异层由技能接管。
+The agent runs the official faceless-explainer pipeline (scaffold → design preset → storyboard & script → narration → per-frame builders → assembly → checks → render); the skill supplies the delta layer.
 
-配套资产：
+The skill directory is fully self-contained and installs with everything it needs:
 
-技能目录完全自包含：`skills/bilingual-tech-explainer/` 内的
-`scripts/gen-voice.py`（edge-tts 词边界配音）、`recipes/`（code-editorial 设计预设 + 分镜骨架）、
-`examples/`（案例帧参考实现）、`references/pitfalls.md`（26 条踩坑清单）会随安装一起落地。
+| Path | What it is |
+|---|---|
+| `scripts/gen-voice.py` | edge-tts narration with native word boundaries → `audio_meta.json` |
+| `recipes/agent-harness-explainer/` | Frozen recipe: code-editorial design preset + storyboard skeleton |
+| `examples/reference-case-frame.html` | Reference case-frame implementation (see `examples/README.md`) |
+| `references/pitfalls.md` | 26 production-tested rules — have any agent read this first |
 
-## 目录约定
+## Project layout convention
 
 ```
-videos/<name>-zh/   # 中文工程（先做，全流程）
-videos/<name>-en/   # 英文工程（复制 zh 帧 → 翻译 → 按词边界重定时）
+videos/<name>-zh/   # Chinese project (build first, full pipeline)
+videos/<name>-en/   # English project (copy zh frames → translate → re-time to word boundaries)
 ```
 
 ## License
 
-MIT（见 LICENSE）。第三方字体文件（examples/assets/fonts/）保留各自原始许可证（EB Garamond / Inter / JetBrains Mono / Noto Sans SC 均为 OFL）。
+MIT (see LICENSE). Third-party font files under `examples/assets/fonts/` keep their original licenses (EB Garamond / Inter / JetBrains Mono / Noto Sans SC — all OFL).
