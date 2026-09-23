@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "agent-harness-explainer",
+  "workflow": "faceless-explainer",
+  "approved_at": "2026-09-23T14:08:42.361Z",
+  "source_project": "agent-harness-zh",
+  "destination": "youtube-bilibili",
+  "aspect": "1920x1080",
+  "language": "zh",
+  "style_preset": "code-editorial"
+}

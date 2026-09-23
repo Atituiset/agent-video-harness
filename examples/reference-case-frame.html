@@ -1,0 +1,408 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-400.woff2") format("woff2"); font-weight: 400; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      color: #141413;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+    }
+
+    [id="pi08-bg"] {
+      background: #FAF9F5;
+    }
+
+    [id="pi08-kicker"] {
+      position: absolute;
+      left: 80px;
+      top: 92px;
+      font-family: "JetBrains Mono", "Noto Sans SC", monospace;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #141413;
+    }
+    [id="pi08-spike"] {
+      color: #CC785C;
+    }
+    [id="pi08-rule"] {
+      position: absolute;
+      left: 80px;
+      top: 152px;
+      width: 560px;
+      height: 1px;
+      background: rgba(20, 20, 19, 0.14);
+      transform-origin: left center;
+    }
+
+    [id="pi08-name"] {
+      position: absolute;
+      left: 80px;
+      top: 196px;
+      font-family: "EB Garamond", "Noto Sans SC", Georgia, serif;
+      font-size: 80px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.018em;
+      color: #141413;
+    }
+
+    [class~="pi08-slot"] {
+      position: absolute;
+      top: 330px;
+      height: 64px;
+      padding: 0 34px;
+      display: flex;
+      align-items: center;
+      border-radius: 9999px;
+      border: 1px dashed rgba(20, 20, 19, 0.3);
+      background: transparent;
+    }
+    [class~="pi08-on"] {
+      border: 1px solid rgba(20, 20, 19, 0.14);
+      background: #EFE9DE;
+    }
+    [id="pi08-slot-read"] { left: 80px; }
+    [id="pi08-slot-write"] { left: 231px; }
+    [id="pi08-slot-edit"] { left: 398px; }
+    [id="pi08-slot-bash"] { left: 549px; }
+    [class~="pi08-slot-label"] {
+      font-family: "JetBrains Mono", "Noto Sans SC", monospace;
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #141413;
+      opacity: 0;
+    }
+
+    [id="pi08-ring"] {
+      position: absolute;
+      left: 1280px;
+      top: 205px;
+      width: 460px;
+      height: 460px;
+    }
+
+    [id="pi08-hero-box"] {
+      position: absolute;
+      left: 1310px;
+      top: 340px;
+      width: 400px;
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    [id="pi08-hero-num"] {
+      font-family: "EB Garamond", "Noto Sans SC", Georgia, serif;
+      font-size: 150px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: #141413;
+    }
+    [id="pi08-hero-unit"] {
+      position: absolute;
+      left: 1310px;
+      top: 656px;
+      width: 400px;
+      text-align: center;
+      font-family: "JetBrains Mono", "Noto Sans SC", monospace;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1;
+      color: #141413;
+    }
+
+    [id="pi08-cost-box"] {
+      position: absolute;
+      left: 1280px;
+      top: 736px;
+      width: 400px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+    }
+    [id="pi08-cost-num"] {
+      font-family: "EB Garamond", "Noto Sans SC", Georgia, serif;
+      font-size: 56px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #141413;
+    }
+    [id="pi08-cost-unit"] {
+      position: absolute;
+      left: 1280px;
+      top: 832px;
+      font-family: "JetBrains Mono", "Noto Sans SC", monospace;
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: rgba(20, 20, 19, 0.72);
+    }
+
+    [id="pi08-rail"] {
+      position: absolute;
+      left: 850px;
+      top: 30px;
+      width: 940px;
+      height: 60px;
+    }
+    [id="pi08-rail"] svg {
+      overflow: visible;
+    }
+    .pi08-rail-label {
+      font-family: "JetBrains Mono", "Noto Sans SC", monospace;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+    }
+
+    [id="pi08-fig"] {
+      position: absolute;
+      left: 690px;
+      top: 350px;
+      width: 560px;
+      background: #FFFFFF;
+      border: 1px solid rgba(20, 20, 19, 0.12);
+      border-radius: 8px;
+      box-shadow: 0 18px 40px rgba(20, 20, 19, 0.1), 0 2px 8px rgba(20, 20, 19, 0.06);
+      overflow: hidden;
+    }
+    [id="pi08-fig-img"] {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    [id="pi08-fig-cap"] {
+      padding: 10px 16px 12px;
+      font-family: "JetBrains Mono", "Noto Sans SC", monospace;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: rgba(20, 20, 19, 0.72);
+    }
+  </style>
+
+  <div id="root" data-composition-id="08-pi" data-width="1920" data-height="1080" data-duration="10.796">
+    <div class="clip" id="pi08-bg" data-start="0" data-duration="10.796" data-track-index="0"></div>
+
+    <div class="clip" data-start="0" data-duration="10.796" data-track-index="7">
+      <div id="pi08-rail">
+        <svg width="940" height="60" viewBox="0 0 940 60">
+          <line x1="10" y1="18" x2="376" y2="18" stroke="rgba(20, 20, 19, 0.15)" stroke-width="1" />
+          <circle cx="50" cy="18" r="4" fill="#141413" />
+          <circle cx="74" cy="18" r="4" fill="#141413" />
+          <circle cx="98" cy="18" r="4" fill="#141413" />
+          <circle cx="122" cy="18" r="4" fill="#141413" />
+          <circle cx="146" cy="18" r="4" fill="#141413" />
+          <circle cx="170" cy="18" r="4" fill="#141413" />
+          <circle cx="194" cy="18" r="8" fill="#CC785C" />
+          <circle cx="220" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <circle cx="246" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <circle cx="272" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <circle cx="298" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <circle cx="324" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <circle cx="350" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <circle cx="376" cy="18" r="4" fill="none" stroke="rgba(20, 20, 19, 0.25)" stroke-width="1" />
+          <text class="pi08-rail-label" x="194" y="34" text-anchor="middle" fill="#141413">PI</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="10.796" data-track-index="1">
+      <div id="pi08-kicker"><span id="pi08-spike">✱</span> 案例 01</div>
+      <div id="pi08-rule"></div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="10.796" data-track-index="2">
+      <div class="pi08-slot" id="pi08-slot-read"><span class="pi08-slot-label" id="pi08-label-read">read</span></div>
+      <div class="pi08-slot" id="pi08-slot-write"><span class="pi08-slot-label" id="pi08-label-write">write</span></div>
+      <div class="pi08-slot" id="pi08-slot-edit"><span class="pi08-slot-label" id="pi08-label-edit">edit</span></div>
+      <div class="pi08-slot" id="pi08-slot-bash"><span class="pi08-slot-label" id="pi08-label-bash">bash</span></div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="10.796" data-track-index="3">
+      <svg id="pi08-ring" width="460" height="460" viewBox="0 0 460 460">
+        <circle cx="230" cy="230" r="200" fill="none" stroke="rgba(20, 20, 19, 0.14)" stroke-width="2" />
+        <circle
+          id="pi08-sweep"
+          cx="230"
+          cy="230"
+          r="200"
+          fill="none"
+          stroke="#CC785C"
+          stroke-width="8"
+          stroke-linecap="round"
+          stroke-dasharray="1256.637"
+          stroke-dashoffset="1256.637"
+          transform="rotate(-90 230 230)"
+        />
+      </svg>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="10.796" data-track-index="4">
+      <div id="pi08-name">Pi · 极简</div>
+    </div>
+
+    <div class="clip" id="pi08-hero" data-start="7.35" data-duration="3.446" data-track-index="5">
+      <div id="pi08-hero-box"><span id="pi08-hero-num">0.0%</span></div>
+      <div id="pi08-hero-unit">通过率</div>
+    </div>
+
+    <div class="clip" id="pi08-cost" data-start="8.95" data-duration="1.846" data-track-index="6">
+      <div id="pi08-cost-box"><span id="pi08-cost-num">$0.000</span></div>
+      <div id="pi08-cost-unit">单次任务成本</div>
+    </div>
+
+    <div class="clip" data-start="9.7" data-duration="1.096" data-track-index="8">
+      <div id="pi08-fig">
+        <img id="pi08-fig-img" src="assets/figures/pi-composio.png" alt="Composio agentic eval 结果图" />
+        <div id="pi08-fig-cap">Composio agentic eval · 2026-08</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+      var $ = function (id) {
+        return document.getElementById(id);
+      };
+
+      // Scene 1 — full stage (kicker, title, slots, gauge, rail) up by t=0.45
+      tl.fromTo(
+        $("pi08-kicker"),
+        { y: 16, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: "power2.out" },
+        0
+      );
+      tl.fromTo($("pi08-rule"), { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, 0.08);
+
+      var tools = ["read", "write", "edit", "bash"];
+      tools.forEach(function (t, i) {
+        var slot = $("pi08-slot-" + t);
+        tl.set(slot, { className: "pi08-slot" }, 0);
+        tl.fromTo(
+          slot,
+          { y: 14, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.25, ease: "power2.out" },
+          0.05 + i * 0.05
+        );
+      });
+
+      // evolution rail fades in at t=0 and stays for the whole frame
+      tl.fromTo($("pi08-rail"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: "power1.out" }, 0);
+
+      // the empty gauge is part of the opening scaffolding
+      tl.fromTo($("pi08-ring"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: "power1.out" }, 0.12);
+
+      // title is part of the opening, complete by t=0.45
+      tl.fromTo(
+        $("pi08-name"),
+        { y: 26, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.35, ease: "power2.out" },
+        0.1
+      );
+
+      // Scene 2 — badges fill on "只暴露四个工具" (4.90–6.19)
+      tools.forEach(function (t, i) {
+        var at = 4.95 + i * 0.25;
+        var slot = $("pi08-slot-" + t);
+        tl.set(slot, { className: "pi08-slot pi08-on" }, at);
+        tl.fromTo(slot, { scale: 0.94 }, { scale: 1, duration: 0.35, ease: "power2.out" }, at);
+        tl.fromTo(
+          $("pi08-label-" + t),
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.3, ease: "power1.out" },
+          at
+        );
+      });
+
+      // Scene 3 — hero count-up + ring sweep on "完成得最多" (7.79–8.69)
+      var heroNum = $("pi08-hero-num");
+      var heroProxy = { v: 0 };
+      var CIRC = 1256.637;
+      tl.fromTo($("pi08-hero"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25, ease: "power1.out" }, 7.35);
+      tl.fromTo(heroNum, { scale: 0.72 }, { scale: 1, duration: 1.31, ease: "power2.out" }, 7.35);
+      tl.to(
+        heroProxy,
+        {
+          v: 66.7,
+          duration: 1.31,
+          ease: "power2.out",
+          onUpdate: function () {
+            heroNum.textContent = heroProxy.v.toFixed(1) + "%";
+          }
+        },
+        7.35
+      );
+      tl.fromTo(
+        $("pi08-sweep"),
+        { strokeDashoffset: CIRC },
+        { strokeDashoffset: CIRC * (1 - 0.667), duration: 1.31, ease: "power2.out" },
+        7.35
+      );
+      tl.fromTo(
+        $("pi08-hero-unit"),
+        { y: 10, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: "power2.out" },
+        8.35
+      );
+
+      // Scene 4 — cost lockup on "花得最少" (8.93–9.72)
+      var costNum = $("pi08-cost-num");
+      var costProxy = { v: 0 };
+      tl.fromTo($("pi08-cost"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25, ease: "power1.out" }, 8.95);
+      tl.fromTo(
+        costNum,
+        { scale: 0.85, transformOrigin: "left center" },
+        { scale: 1, duration: 0.71, ease: "power2.out" },
+        8.95
+      );
+      tl.to(
+        costProxy,
+        {
+          v: 0.012,
+          duration: 0.71,
+          ease: "power2.out",
+          onUpdate: function () {
+            costNum.textContent = "$" + costProxy.v.toFixed(3);
+          }
+        },
+        8.95
+      );
+      tl.fromTo(
+        $("pi08-cost-unit"),
+        { y: 8, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: "power2.out" },
+        9.45
+      );
+
+      // Scene 5 — evidence figure slides in once the cost lockup has landed (9.66)
+      tl.fromTo(
+        $("pi08-fig"),
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out" },
+        9.7
+      );
+
+      // Scene 6 — held read to the cut
+      tl.to({}, { duration: 10.796 }, 0);
+      window.__timelines["08-pi"] = tl;
+    })();
+  </script>
+</template>
