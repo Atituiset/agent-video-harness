@@ -1,5 +1,9 @@
 # skills
 
+[![ci](https://github.com/Atituiset/skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Atituiset/skills/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/Atituiset/skills)](https://github.com/Atituiset/skills/releases)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **[English](README.md)** · 中文文档
 
 把真实生产经验固化成可复用工作流的 agent skills 集合。纯 Markdown + CLI 脚本，可组合、跨 agent——Kimi Code、Claude Code、OpenCode、Codex 或任何能读文件跑 shell 的 agent 都能驱动。

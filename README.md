@@ -1,5 +1,9 @@
 # skills
 
+[![ci](https://github.com/Atituiset/skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Atituiset/skills/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/Atituiset/skills)](https://github.com/Atituiset/skills/releases)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **[中文文档](README.zh-CN.md)** · English
 
 Agent skills that turn real production experience into repeatable workflows. Plain Markdown + CLI scripts, composable, agent-agnostic — they run on Kimi Code, Claude Code, OpenCode, Codex, or anything that can read a file and run a shell.

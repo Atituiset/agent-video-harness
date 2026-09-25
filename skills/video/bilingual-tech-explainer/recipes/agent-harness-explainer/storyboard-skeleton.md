@@ -5,6 +5,14 @@ arc: concept-explainer with process
 music: none
 ---
 
+> **For English readers**: this is the frozen storyboard skeleton of a shipped zh-language
+> production (see `recipe.json`: `language: zh`). The body stays Chinese by design — the zh
+> project is built first and the EN project derives from it by translation. The transferable
+> part is the *structure*: the Video direction contract (palette roles / motion grammar /
+> reveal model / held-beat allocation / negative list), the per-frame metadata fields
+> (duration, transition_in, blueprint, focal, roles), and the `<fill in>` placeholders.
+> Frame titles and chrome like `✱ 案例 0N` are zh-project-specific.
+
 ## Video direction
 
 **Palette system（roles → hues，全部取自 frame.md，禁止发明）**

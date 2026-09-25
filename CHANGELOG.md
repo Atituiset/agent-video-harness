@@ -4,6 +4,15 @@ All notable changes to this project are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-09-26
+
+### Changed
+
+- `examples/README.md` rewritten English-primary (short zh pointer kept).
+- `storyboard-skeleton.md` gained an English orientation note; the body stays
+  Chinese by design (frozen `language: zh` recipe — zh is built first, EN derives).
+- Root READMEs gained CI / release / license badges.
+
 ## [0.2.0] - 2026-09-26
 
 ### Changed
