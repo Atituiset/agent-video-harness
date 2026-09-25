@@ -31,9 +31,9 @@
 npx skills add Atituiset/skills --skill bilingual-tech-explainer
 
 # 或手动复制
-cp -r skills/bilingual-tech-explainer/ ~/.agents/skills/bilingual-tech-explainer          # Kimi Code / 通用
-cp -r skills/bilingual-tech-explainer ~/.claude/skills/          # Claude Code
-cp -r skills/bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
+cp -r bilingual-tech-explainer/ ~/.agents/bilingual-tech-explainer          # Kimi Code / 通用
+cp -r bilingual-tech-explainer ~/.claude/skills/          # Claude Code
+cp -r bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
 ```
 
 同时确保官方工作流在位：`npx skills add heygen-com/hyperframes --skill faceless-explainer`。
