@@ -1,6 +1,14 @@
-# agent-video-harness
+# skills
 
 **[English](README.md)** · 中文文档
+
+我自己的 agent skills 集合仓。所有技能用 skills CLI 安装：`npx skills add Atituiset/skills --skill <技能名>`。
+
+## 技能列表
+
+### bilingual-tech-explainer
+
+把技术文章做成**中英双语程序员科普视频**的开源工作流。
 
 把技术文章做成**中英双语程序员科普视频**的开源工作流。基于 [HyperFrames](https://hyperframes.heygen.com)（HTML 即视频源）+ edge-tts/Kokoro 配音 + 原生词边界字幕对齐，全部流程可被任何 coding agent（Kimi Code / Claude Code / OpenCode / Codex 等）驱动。
 
@@ -20,10 +28,10 @@
 
 ```bash
 # 通过 skills CLI（推荐）
-npx skills add Atituiset/agent-video-harness --skill bilingual-tech-explainer
+npx skills add Atituiset/skills --skill bilingual-tech-explainer
 
 # 或手动复制
-cp -r skills/bilingual-tech-explainer ~/.agents/skills/          # Kimi Code / 通用
+cp -r skills/bilingual-tech-explainer/ ~/.agents/skills/bilingual-tech-explainer          # Kimi Code / 通用
 cp -r skills/bilingual-tech-explainer ~/.claude/skills/          # Claude Code
 cp -r skills/bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
 ```

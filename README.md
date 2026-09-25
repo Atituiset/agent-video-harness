@@ -1,6 +1,14 @@
-# agent-video-harness
+# skills
 
 **[中文文档](README.zh-CN.md)** · English
+
+My personal agent-skills collection. Install any skill with the skills CLI: `npx skills add Atituiset/skills --skill <name>`.
+
+## Skills
+
+### bilingual-tech-explainer
+
+An open-source workflow that turns technical articles into **bilingual (zh+en) explainer videos for programmers**.
 
 An open-source workflow that turns technical articles into **bilingual (zh+en) explainer videos for programmers**. Built on [HyperFrames](https://hyperframes.heygen.com) (HTML-as-video) + edge-tts/Kokoro narration + native word-boundary captions. The entire pipeline is drivable by any coding agent (Kimi Code / Claude Code / OpenCode / Codex …).
 
@@ -20,7 +28,7 @@ Prerequisite: the `npx hyperframes` CLI (see HyperFrames docs).
 
 ```bash
 # via the skills CLI (recommended)
-npx skills add Atituiset/agent-video-harness --skill bilingual-tech-explainer
+npx skills add Atituiset/skills --skill bilingual-tech-explainer
 
 # or copy manually
 cp -r skills/bilingual-tech-explainer ~/.agents/skills/          # Kimi Code / generic
