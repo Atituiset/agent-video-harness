@@ -10,6 +10,12 @@ All rules distilled from one full production run (long technical article → bil
 4. Kokoro/edge-tts output is deterministic: for script edits, re-record only the changed lines and merge them into audio_meta.json; untouched frames need no work at all.
 5. Duration estimation: ~4.5 chars/second for Chinese is optimistic; dense technical explainers overrun by 10–16%. Remember to sync the storyboard's duration values.
 
+## Caption style
+
+31. Captions are plain text overlaid on the frame — no background pill/box. If legibility needs help, use a subtle text shadow, never a panel.
+32. Caption groups are full phrases / breath groups (one sentence segment per line), not 2–4-word fragments — fragment captions flicker and read as rushed.
+33. Never underline the currently-spoken word; highlight with accent color or weight if at all — underline reads as a hyperlink.
+
 ## Composition & timeline
 
 6. DOM ids/classes starting with a digit (`01-hook-bg`) make querySelectorAll throw SyntaxError and kill the whole frame's script — they must start with a letter. The lint warning `id_requires_css_escape` is the omen.

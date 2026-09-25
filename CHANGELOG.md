@@ -4,6 +4,16 @@ All notable changes to this project are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-09-26
+
+### Added
+
+- Caption style rules, from viewer feedback on the second production:
+  pitfalls 31–33 (new "Caption style" category: plain-text captions without
+  background pill, phrase-length groups instead of 2–4-word fragments, no
+  underline on the spoken word) and a matching caption-style bullet in
+  `bilingual-video` SKILL.md §2.
+
 ## [0.3.0] - 2026-09-26
 
 ### Added

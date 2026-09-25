@@ -1,6 +1,6 @@
 ---
 name: bilingual-video
-description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 30-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
+description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 33-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
 ---
 
 # Bilingual video production — the general layer (any video type)
@@ -23,6 +23,7 @@ Build two independent projects, `videos/<name>-zh` and `videos/<name>-en`. Narra
   ```
 - **English**: the official audio pipeline + Kokoro `af_sky` `--speed 1.05` (requires `pip install kokoro-onnx soundfile`, with `HYPERFRAMES_PYTHON` pointing at the venv).
 - Both engines are deterministic. On both sides, use the official `audio.mjs sync-durations` to write durations back into the storyboard, and `captions.mjs` for captions.
+- **Caption style (defaults for every video)**: plain text overlaid on the frame — no background pill/box (if legibility needs help, a subtle text shadow, never a panel). Groups are full phrases / breath groups (one sentence segment per line), never 2–4-word fragments. No underline on the currently-spoken word — highlight by accent color or weight if at all. Set these in the caption skin / `caption-overrides.json` before running `captions.mjs`.
 
 ## 3. The iteration loop (cheapest path for script edits)
 
