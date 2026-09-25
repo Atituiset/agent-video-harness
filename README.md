@@ -6,9 +6,13 @@ My personal agent-skills collection. Install any skill with the skills CLI: `npx
 
 ## Skills
 
+### bilingual-video
+
+The general layer for **any bilingual (zh+en) HyperFrames video** — dual independent projects, edge-tts/Kokoro narration with word-boundary captions, the single-line iteration loop, publishing conventions, 26 universal pitfalls. [README](skills/bilingual-video/README.md)
+
 ### bilingual-tech-explainer
 
-An open-source workflow that turns technical articles into **bilingual (zh+en) explainer videos for programmers**.
+Turns technical articles into **bilingual explainer videos for programmers** — narrative spine (wall → fix), continuity kit, teaching blueprints. Depends on `bilingual-video`. [README](skills/bilingual-tech-explainer/README.md)
 
 An open-source workflow that turns technical articles into **bilingual (zh+en) explainer videos for programmers**. Built on [HyperFrames](https://hyperframes.heygen.com) (HTML-as-video) + edge-tts/Kokoro narration + native word-boundary captions. The entire pipeline is drivable by any coding agent (Kimi Code / Claude Code / OpenCode / Codex …).
 

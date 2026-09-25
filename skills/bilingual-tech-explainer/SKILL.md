@@ -1,65 +1,29 @@
 ---
 name: bilingual-tech-explainer
-description: 把技术文章/调研文档做成中英双语程序员科普视频的封装工作流。基于 HyperFrames 官方 faceless-explainer，叠加中文 edge-tts 配音、双语独立工程、连贯性三件套（演化 rail / 开场舞台骨架 / 边界卡片）和全部踩坑清单。Use when turning a technical article, research notes, or docs into a bilingual (zh+en) explainer video for programmers.
+description: 把技术文章/调研文档做成中英双语程序员科普视频。叙事骨架（撞墙→补墙）+ 连贯性三件套（演化 rail / 开场舞台骨架 / 边界卡片）+ 科普专用的蓝图与证据卡模式。依赖同仓库的 bilingual-video 技能（配音/字幕/发布通用层）和官方 faceless-explainer 工作流。Use when turning a technical article, research notes, or docs into a bilingual (zh+en) explainer video for programmers.
 ---
 
-# 双语技术科普视频工作流
+# 双语技术科普视频（技术文章 → 中英科普片）
 
-把一篇技术文章做成中英两支 1920×1080 科普视频。**核心流水线走官方 `/faceless-explainer` 技能**（先加载它和 `/hyperframes`；没有则 `npx skills add heygen-com/hyperframes --skill faceless-explainer`）。本技能只定义差异层，全部规则来自一次完整实战的返工沉淀，自包含、不依赖任何外部工程。
+**依赖**：同仓库的 `bilingual-video` 技能（双语生产通用层：双工程、配音字幕、迭代闭环、发布惯例、26 条踩坑清单——先读它的 `references/pitfalls.md`）+ 官方 `/faceless-explainer` 工作流（`npx skills add heygen-com/hyperframes --skill faceless-explainer`）。本技能只定义科普片特有的叙事与视觉层。
 
-本技能目录自带三样配套资产（以 `<SKILL_DIR>` 指代本技能目录）：
-- `<SKILL_DIR>/recipes/agent-harness-explainer/` — 冻结配方（设计预设 + BRIEF 骨架 + 分镜骨架），可用 `node <media-use>/scripts/recipe.mjs use --hyperframes . --name agent-harness-explainer` 采纳，或手动把 `frame.md` 拷入新工程
-- `<SKILL_DIR>/examples/reference-case-frame.html` — 案例帧参考实现（结构/计时/rail/字幕避让的抄写对象；详见 `<SKILL_DIR>/examples/README.md`）
-- `<SKILL_DIR>/references/pitfalls.md` — 完整踩坑清单（派发任务给任何 agent 时让它先读）
+自带资产（`<SKILL_DIR>` 为本技能目录）：
+- `recipes/agent-harness-explainer/` — 冻结配方（code-editorial 设计预设 + BRIEF 骨架 + 分镜骨架），可被官方 `recipe.mjs use` 采纳或手动拷贝 `frame.md`
+- `examples/reference-case-frame.html` — 案例帧参考实现（结构/计时/rail/字幕避让的抄写对象，见 `examples/README.md`）
 
-## 与官方工作流的差异
+## 叙事骨架：撞墙 → 补墙
 
-### 1. 双工程，不参数化
+技术演化/原理解构类内容，每一层必须"先撞墙再补墙"：上一层的能力边界先被点名（"模型不记得上一轮——这是第一条边界"），再引出本层机制。写 SCRIPT.md 时逐帧自查：本帧开场是否回答了"为什么现在讲这个"。案例之间要有转向句（"另一条路是…""X 关心的是另一件事：…"），否则就是赶场视频。
 
-建两个独立工程 `videos/<name>-zh` 和 `videos/<name>-en`。配音时长差可达 15%，时间轴各自独立。顺序：先做 zh 全流程到 render，EN 工程复制 zh 的 `compositions/frames/` 后逐帧翻译+按英文词边界重定时（reveal 必须 re-anchor 到词，禁止均匀缩放）。
+## 连贯性三件套（多帧科普的默认件）
 
-### 2. 配音与字幕
+1. **演化 rail**：顶部进度 rail（y≈48），全片每帧 t=0 就位、全程静止。层级段显示层级节点（过去=实心、当前=accent 大点+标签、未来=空心）；案例段切换为旅程点+案例点。它是全片共享的视觉锚点——幻灯片感的主要解药。
+2. **开场舞台骨架**：每帧 t≤0.45s 必须已显示 kicker+完整标题+图解骨架（空槽位/底图）。官方注入的 0.5s 转场落在下一帧开头——没有骨架，观众反复看到空白画布。VO-paced reveal 只留给细节层。
+3. **边界卡片**：每层开场亮 `✗ 边界 N · …`，机制落地时翻 accent ✓+删除线。把叙事铺垫可视化，不听配音也能看懂因果链。
 
-- **中文**：edge-tts `zh-CN-XiaoxiaoNeural --rate=+3%`（中文不要用 Kokoro，口音重）。用本技能 `scripts/gen-voice.py`——edge-tts 的 `boundary="WordBoundary"` 原生词边界直接生成官方管线兼容的 `audio_meta.json`，比 Whisper 对齐更准更省：
-  ```bash
-  python3 -m venv scripts/.venv && scripts/.venv/bin/pip install edge-tts fonttools brotli
-  scripts/.venv/bin/python <SKILL_DIR>/scripts/gen-voice.py --project .          # 全部行
-  scripts/.venv/bin/python <SKILL_DIR>/scripts/gen-voice.py --project . 3 4 5    # 只重录改动的行（merge 模式）
-  ```
-- **英文**：官方音频管线，Kokoro `af_sky` `--speed 1.05`（需 `pip install kokoro-onnx soundfile` 并用 `HYPERFRAMES_PYTHON` 指向该 venv）。Kokoro/edge-tts 均确定性输出，改稿只重录改动行。
-- 两侧都用 `audio.mjs sync-durations` 回写分镜时长，再用官方 `captions.mjs` 生成字幕。
+## 科普片的内容模式
 
-### 3. 连贯性三件套（多帧科普视频默认件）
-
-观众对"赶场/幻灯片感"的投诉都靠这三件解决：
-
-1. **演化 rail**：顶部一条进度 rail（y≈48，x 860–1780），全片每帧 t=0 就位、全程静止。层级段显示 `LLM·上下文·循环·…` 节点（过去=实心、当前=coral r8+标签、未来=空心）；案例段切换为旅程点+案例点。它是全片共享的视觉锚点——幻灯片感的主要解药。
-2. **开场舞台骨架**：每帧 t≤0.45s 必须已显示 kicker+完整标题+图解骨架（空槽位/底图）。否则注入的 0.5s 转场会落在空白画布上——这是"不连贯"观感的第一来源。VO-paced reveal 只留给细节层（卡内容、数字、被念到的标签）。
-3. **边界卡片**（叙事型视频）：每层开场亮 `✗ 边界 N · …`，机制落地时翻 coral ✓+删除线。把"每个零件的出现都有原因"直接画出来。
-
-### 4. 图解规则（箭头三律等）
-
-- 箭头终点距目标 ≥14px；箭头用显式 polygon 且在 DOM/SVG 顺序中排在节点之后（后画者在上）；方向按路径切线计算核对。不要用 SVG `marker-end`，不要用 GSAP `attr: stroke-dashoffset`（会被 CSS 声明覆盖，只剩端点）。
-- 巡游亮点（tour dot）的停泊位置避开所有箭头。
-- "飞入容器"的元素停靠在容器边缘，别飞到中心再淡出（hold 帧会读成舞台空了）。
-- 文字一律实心颜色 ≥4.5:1（check 会采样动画中间态）；`mask-image` 渐隐会制造 ghost text 必然炸对比度，滚出元素用 `tl.set(opacity: 0)` 硬切，保留的行用实心降深色。
-- `tl.set(el, {innerText})` 不是 seek 安全——状态翻转用堆叠双元素 + autoAlpha 交叉淡入。
-
-### 5. 环境与工程陷阱
-
-- 系统 Python 受 PEP 668 保护 → 工程内建 venv（`scripts/.venv`）。
-- SCRIPT.md 帧标题必须半角括号 `(Frame N)`，全角会静默生成 0 行配音。
-- DOM id/class 必须字母开头（`01-hook-bg` 会让 querySelectorAll 直接 SyntaxError，整帧脚本全灭）。
-- CJK 字体用 `pyftsubset --text-file=<工程用字> --flavor=woff2` 子集化（16MB→~112KB），引用 `assets/fonts/*.woff2`；别写机器上没有文件的字体名。
-- 每个全长 clip 独占一条 `data-track-index` lane，否则装配器拒绝。
-- 分镜帧号重排必须用完整标题精确匹配替换（部分正则会先匹配到新插入的同名前缀帧块，字幕整段错位）；改完对账 帧号×时长×src。
-- 大并行子代理 swarm（>10）易撞用量上限；撞了用 harness 的 resume 机制恢复，工作不丢。子代理的临时验证文件用完即删，别留在工程根目录（触发 multiple_root_compositions）。
-- 保存的网页只提文字会丢掉全部图片——先扫 `_files/` 目录，真实测评截图是案例帧最好的证据卡。
-- 绝对定位的装饰元素挂到 `#root` 直下，别放进带 `position:absolute` 的子容器（top 会相对它计算而飞出画布）。
-
-### 6. 交付与发布惯例
-
-- 成片抽帧终检：ffmpeg 抽每帧收尾时刻 + 若干转场接缝目检。
-- 封面：抽高光帧，`crop=1920:890 + pad 回 1080` 裁掉字幕带。
-- 发布物料：B站（科技→计算机技术，简介带章节时间轴+原文署名，自制）；YouTube（Chapters、Science & Technology、勾选 Altered content 合成配音披露）。
-- 发布前必须人工试听配音（尤其中英混读词）。
+- **蓝图选择**：概念命名 → `kinetic-type-beats`/`typewriter-reveal`；机制层 → `grid-card-assemble`/`comparison-split`/`agent-progress-theater`；环形流程 → 自绘环 + 巡游点；案例/数据 → `dataviz-countup`；收尾论断 → `kinetic-type-beats` 接力 + 长驻。
+- **证据卡**：源文章的测评截图/数据图是案例帧最好的可信素材（存 `_files/` 目录时先扫图片，别只提文字）。以带框卡片 + mono 图注（来源 · 日期）在数字落地后进入。
+- **系列案例 + 总览**：多个平行案例用同一舞台（kicker 编号 + rail 进度），只换图解内容；收尾用一张定位图/对照表总览全部对象（"同一道题，只有取舍"），再落论断。
+- **程序员审美**：终端/代码面可用深色面板 + mono 字体；克制 accent 色（每帧至多一处）；无背景音乐时可以完全静音标记（`music: none`）。

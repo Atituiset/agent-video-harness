@@ -6,9 +6,13 @@
 
 ## 技能列表
 
+### bilingual-video
+
+**任何双语视频**的通用生产层——双语独立工程、edge-tts/Kokoro 配音与词边界字幕、单行迭代闭环、发布惯例、26 条通用坑。[README](skills/bilingual-video/README.md)
+
 ### bilingual-tech-explainer
 
-把技术文章做成**中英双语程序员科普视频**的开源工作流。
+把技术文章做成**中英双语程序员科普视频**——撞墙叙事骨架、连贯性三件套、教学蓝图。依赖 `bilingual-video`。[README](skills/bilingual-tech-explainer/README.md)
 
 把技术文章做成**中英双语程序员科普视频**的开源工作流。基于 [HyperFrames](https://hyperframes.heygen.com)（HTML 即视频源）+ edge-tts/Kokoro 配音 + 原生词边界字幕对齐，全部流程可被任何 coding agent（Kimi Code / Claude Code / OpenCode / Codex 等）驱动。
 
