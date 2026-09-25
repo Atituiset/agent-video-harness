@@ -1,6 +1,6 @@
 # Pitfalls checklist (self-contained)
 
-All rules distilled from one full production run (long technical article → bilingual 17-frame explainer video, five rework rounds). Have any agent read this file before dispatching tasks to it.
+All rules distilled from one full production run (long technical article → bilingual 17-frame explainer video, five rework rounds) plus viewer feedback on a second production. Have any agent read this file before dispatching tasks to it.
 
 ## Narration & captions
 
@@ -42,3 +42,10 @@ All rules distilled from one full production run (long technical article → bil
 24. Large parallel sub-agent fan-out (>10) easily hits usage limits; if hit, recover with resume. Sub-agents' temporary verification files are deleted right after use (loose html files in the project root trigger multiple_root_compositions).
 25. Parallel sub-agents overwrite each other's shared `snapshots/` directory — copy verification frames to a private path immediately after capture.
 26. The model cannot hear the narration itself — a human must listen before publishing (especially mixed zh/en words). If unsatisfied, re-record by line + re-time the single frame; the cost is minutes.
+
+## Narrative & pacing
+
+27. Never cold-open on the technical origin ("1943, the neuron model"). Frame 1 establishes a human scenario and a reason to care before any term appears.
+28. The wall→fix spine is scaffolding, not chrome: introduce each wall as a natural question or pain ("but here's the problem —"), never narrate mechanical labels like "boundary N". Wall cards appear once per layer opening, subtly.
+29. Pivot sentences between knowledge points are mandatory; where the blueprint allows, transform a shared stage instead of hard-cutting.
+30. Don't compress the storyboard into fewer frames — compression reads as a rushed slideshow (赶场). Budget ~15–20s per frame, one core idea per frame, ≥3min total for multi-layer topics; reveals fill each frame's full duration and every frame ends on a held beat.

@@ -1,6 +1,6 @@
 ---
 name: bilingual-video
-description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 26-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
+description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 30-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
 ---
 
 # Bilingual video production — the general layer (any video type)
@@ -35,6 +35,6 @@ Edit one line → re-record only that line (merge mode) → `sync-durations` →
 - Bilibili: 科技→计算机技术 category, description with chapter timeline + asset credits, submit as original. YouTube: Chapters timeline, Science & Technology category, tick Altered content (synthetic voice disclosure).
 - **A human must listen to the narration before publishing** (especially mixed zh/en words) — the model cannot hear it itself.
 
-## 5. Pitfalls checklist (26 rules, all universal)
+## 5. Pitfalls checklist (30 rules, all universal)
 
 `<SKILL_DIR>/references/pitfalls.md`: five categories — narration/captions, composition/timeline, animation/seek-safety, text/contrast, workflow/collaboration. Read it before dispatching tasks to any agent (or doing it yourself).

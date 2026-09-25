@@ -4,6 +4,22 @@ All notable changes to this project are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-09-26
+
+### Added
+
+- Pitfalls 27–30, new "Narrative & pacing" category, distilled from viewer
+  feedback on the second production: never cold-open on the technical origin;
+  walls narrated as natural questions, not "boundary N" chrome; mandatory
+  pivot sentences between knowledge points; never compress storyboard pacing
+  (~15–20s per frame, ≥3min for multi-layer topics).
+- `bilingual-tech-explainer` SKILL.md narrative spine rewritten as four hard
+  requirements matching those rules.
+
+### Changed
+
+- Rule count references updated 26 → 30 across all READMEs and SKILL.md files.
+
 ## [0.2.1] - 2026-09-26
 
 ### Changed

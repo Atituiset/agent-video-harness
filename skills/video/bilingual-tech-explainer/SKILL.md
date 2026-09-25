@@ -5,7 +5,7 @@ description: Turn a technical article, research notes, or docs into a bilingual 
 
 # Bilingual tech explainer (article → zh+en explainer film)
 
-**Dependencies**: this repo's `bilingual-video` skill (the bilingual production general layer: dual projects, narration & captions, iteration loop, publishing conventions, 26 pitfalls — read its `references/pitfalls.md` first) + the official `/faceless-explainer` workflow (`npx skills add heygen-com/hyperframes --skill faceless-explainer`). This skill defines only the explainer-specific narrative and visual layers.
+**Dependencies**: this repo's `bilingual-video` skill (the bilingual production general layer: dual projects, narration & captions, iteration loop, publishing conventions, 30 pitfalls — read its `references/pitfalls.md` first) + the official `/faceless-explainer` workflow (`npx skills add heygen-com/hyperframes --skill faceless-explainer`). This skill defines only the explainer-specific narrative and visual layers.
 
 Bundled assets (`<SKILL_DIR>` = this skill's directory):
 - `recipes/agent-harness-explainer/` — frozen recipe (code-editorial design preset + BRIEF skeleton + storyboard skeleton), adoptable via the official `recipe.mjs use` or by copying `frame.md` manually
@@ -13,7 +13,14 @@ Bundled assets (`<SKILL_DIR>` = this skill's directory):
 
 ## Narrative spine: wall → fix
 
-For tech-evolution / mechanism-teardown content, every layer must **hit a wall before the fix appears**: the previous layer's capability boundary is named first ("the model doesn't remember the previous turn — that's boundary #1"), then this layer's mechanism is introduced. When writing SCRIPT.md, self-check frame by frame: does this frame's opening answer "why is this being explained now"? Between cases there must be pivot sentences ("another path is…", "X cares about a different thing: …"), otherwise it's a rushed-slideshow video.
+For tech-evolution / mechanism-teardown content, every layer must **hit a wall before the fix appears**: the previous layer's capability boundary is named first ("the model doesn't remember the previous turn — that's boundary #1"), then this layer's mechanism is introduced. When writing SCRIPT.md, self-check frame by frame: does this frame's opening answer "why is this being explained now"?
+
+Four hard requirements, all learned from viewer feedback on real cuts:
+
+1. **Never cold-open.** Frame 1 starts from a human scenario (the viewer's own experience: "you ask ChatGPT a question, the answer streams out word by word — what makes that possible?") and answers "why should I care" before any term, year, or diagram appears. Opening directly on the technical origin ("1943, the neuron model") fails every time.
+2. **Walls in natural language.** The wall→fix structure is scaffolding, not chrome. The narration introduces each wall as a question or a pain ("but here's the problem —"), never as a mechanical label. Wall cards may flash once per layer opening, subtly — they must not carry the narration, and "boundary N" must not become a repeated verbal tic.
+3. **Pivot sentences are mandatory between every knowledge-point switch** ("another path is…", "X cares about a different thing: …") — without them it is a rushed-slideshow video. Visually, prefer transforming a shared stage over a hard cut wherever the blueprint allows.
+4. **Do not compress the recipe's pacing.** One core idea per frame, ~15–20s each; a multi-layer explainer is ≥3 minutes total. Reveals must fill each frame's full duration, and every frame ends on a held beat. If a cut feels rushed, the fix is more frames — never faster narration or denser frames.
 
 ## The continuity kit (default for multi-frame explainers)
 
