@@ -31,9 +31,9 @@ Prerequisite: the `npx hyperframes` CLI (see HyperFrames docs).
 npx skills add Atituiset/skills --skill bilingual-tech-explainer
 
 # or copy manually
-cp -r bilingual-tech-explainer ~/.agents/skills/          # Kimi Code / generic
-cp -r bilingual-tech-explainer ~/.claude/skills/          # Claude Code
-cp -r bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
+cp -r skills/bilingual-tech-explainer ~/.agents/skills/          # Kimi Code / generic
+cp -r skills/bilingual-tech-explainer ~/.claude/skills/          # Claude Code
+cp -r skills/bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
 ```
 
 Also make sure the official workflow is installed: `npx skills add heygen-com/hyperframes --skill faceless-explainer`.
