@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "bilingual-tech-explainer": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "9cd43213e737c96e2ec5dac1909da4f893ce35af122d1c2312bc64f1ef727291"
+    },
+    "bilingual-video": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "0600f5146aa9344f9ffad025a1359dc412cfb11967947b26f0e83bbe84887d58"
+    }
+  }
+}

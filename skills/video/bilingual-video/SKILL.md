@@ -1,40 +1,40 @@
 ---
 name: bilingual-video
-description: 任何 HyperFrames 视频的中英双语生产通用层——双语独立工程、edge-tts（中文）/Kokoro（英文）配音与原生词边界字幕、单行重录迭代闭环、发布物料惯例、26 条通用踩坑清单。与具体视频类型无关，任何路由（explainer/promo/recut/motion-graphics…）都先过这一层。Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type.
+description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 26-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
 ---
 
-# 双语视频生产通用层（任何视频类型）
+# Bilingual video production — the general layer (any video type)
 
-这是所有双语视频生产的**通用底座**，与视频类型无关。先按 `/hyperframes` 的 intent 层路由到具体工作流（faceless-explainer / product-launch-video / pr-to-video / talking-head-recut / embedded-captions / music-to-video / motion-graphics / general-video），本技能提供它们之上不变的五样东西。
+This is the **shared foundation** for all bilingual video production, independent of video type. First route by intent via `/hyperframes` to a concrete workflow (faceless-explainer / product-launch-video / pr-to-video / talking-head-recut / embedded-captions / music-to-video / motion-graphics / general-video); this skill supplies the five things that stay invariant on top of all of them.
 
-技术科普视频请直接用同仓库的 `bilingual-tech-explainer`（它依赖本技能）。
+For technical explainer videos, use this repo's `bilingual-tech-explainer` directly (it depends on this skill).
 
-## 1. 双工程，不参数化
+## 1. Dual projects, never parameterized
 
-中英建两个独立工程 `videos/<name>-zh` / `videos/<name>-en`。配音时长差可达 15%，时间轴各自独立才不拧巴。顺序：**先做 zh 全流程到 render；EN 工程复制 zh 的 `compositions/frames/` 后逐帧翻译 + 按英文词边界重定时**——reveal 必须 re-anchor 到被念到的词，禁止均匀缩放。镜像修改要做两遍、验两遍。
+Build two independent projects, `videos/<name>-zh` and `videos/<name>-en`. Narration length can differ by up to 15% between languages; independent timelines are the only way to avoid contortions. Order: **build zh end-to-end to render first; then the EN project copies zh's `compositions/frames/`, translates frame by frame, and re-times to English word boundaries** — reveals must re-anchor to the word actually being spoken; uniform rescaling is forbidden. Mirrored edits are done twice and verified twice.
 
-## 2. 配音与字幕（与视频类型无关）
+## 2. Narration & captions (type-independent)
 
-- **中文**：edge-tts `zh-CN-XiaoxiaoNeural --rate=+3%`（Kokoro 中文音色有口音，英文却很好）。用 `scripts/gen-voice.py`——edge-tts 的 `boundary="WordBoundary"` 原生词边界直接产出官方管线兼容的 `audio_meta.json`，免 Whisper：
+- **Chinese**: edge-tts `zh-CN-XiaoxiaoNeural --rate=+3%` (Kokoro's Chinese voices have an accent; its English voices are excellent). Use `scripts/gen-voice.py` — edge-tts's `boundary="WordBoundary"` native word boundaries directly produce an `audio_meta.json` compatible with the official pipeline, no Whisper needed:
   ```bash
   python3 -m venv scripts/.venv && scripts/.venv/bin/pip install edge-tts fonttools brotli
-  scripts/.venv/bin/python <SKILL_DIR>/scripts/gen-voice.py --project .          # 全部行
-  scripts/.venv/bin/python <SKILL_DIR>/scripts/gen-voice.py --project . 3 4 5    # 只重录改动行（merge）
+  scripts/.venv/bin/python <SKILL_DIR>/scripts/gen-voice.py --project .          # all lines
+  scripts/.venv/bin/python <SKILL_DIR>/scripts/gen-voice.py --project . 3 4 5    # re-record only changed lines (merge)
   ```
-- **英文**：官方音频管线 + Kokoro `af_sky` `--speed 1.05`（需 `pip install kokoro-onnx soundfile`，`HYPERFRAMES_PYTHON` 指向 venv）。
-- Kokoro/edge-tts 均确定性输出。两侧都用官方 `audio.mjs sync-durations` 回写分镜时长、`captions.mjs` 出字幕。
+- **English**: the official audio pipeline + Kokoro `af_sky` `--speed 1.05` (requires `pip install kokoro-onnx soundfile`, with `HYPERFRAMES_PYTHON` pointing at the venv).
+- Both engines are deterministic. On both sides, use the official `audio.mjs sync-durations` to write durations back into the storyboard, and `captions.mjs` for captions.
 
-## 3. 迭代闭环（改稿的最小成本路径）
+## 3. The iteration loop (cheapest path for script edits)
 
-改一行文案 → 只重录该行（merge 模式）→ `sync-durations` → 只重定时该帧（reveal re-anchor 到新词边界）→ 重建该帧字幕 → `assemble-index` + `transitions inject` → `lint`/`check` → 重渲。单行修改总成本几分钟，不要整片重来。
+Edit one line → re-record only that line (merge mode) → `sync-durations` → re-time only that frame (reveals re-anchor to the new word boundaries) → rebuild that frame's captions → `assemble-index` + `transitions inject` → `lint`/`check` → re-render. A single-line change costs minutes; never redo the whole film.
 
-## 4. 交付与发布惯例
+## 4. Delivery & publishing conventions
 
-- 终检：ffmpeg 抽每帧收尾时刻 + 若干转场接缝目检；文件体积是快速健康指标（几 MB 的全隐形残片 = 时间轴结构坏了）。
-- 封面：抽高光帧，`crop=1920:890` + `pad` 回 1080 裁掉字幕带。
-- B站：科技→计算机技术，简介带章节时间轴 + 素材署名，投自制。YouTube：Chapters 时间轴、Science & Technology、勾选 Altered content（合成配音披露）。
-- **发布前必须人工试听配音**（尤其中英混读词），模型无法亲耳验证。
+- Final check: ffmpeg-probe the closing moment of every frame plus several transition seams for visual inspection; file size is a quick health signal (a few-MB film with invisible remnants everywhere = broken timeline structure).
+- Cover image: grab a highlight frame, `crop=1920:890` + `pad` back to 1080 to cut off the caption band.
+- Bilibili: 科技→计算机技术 category, description with chapter timeline + asset credits, submit as original. YouTube: Chapters timeline, Science & Technology category, tick Altered content (synthetic voice disclosure).
+- **A human must listen to the narration before publishing** (especially mixed zh/en words) — the model cannot hear it itself.
 
-## 5. 踩坑清单（26 条，全部通用）
+## 5. Pitfalls checklist (26 rules, all universal)
 
-`<SKILL_DIR>/references/pitfalls.md`：配音/字幕、合成/时间轴、动效/seek 安全、文字/对比度、工作流/协作五类。派发任务给任何 agent（或自己动手）前先读。
+`<SKILL_DIR>/references/pitfalls.md`: five categories — narration/captions, composition/timeline, animation/seek-safety, text/contrast, workflow/collaboration. Read it before dispatching tasks to any agent (or doing it yourself).
