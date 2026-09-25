@@ -1,0 +1,23 @@
+{
+  "name": "atituiset",
+  "owner": {
+    "name": "Atituiset",
+    "url": "https://github.com/Atituiset"
+  },
+  "description": "Agent skills for bilingual (zh+en) video production with HyperFrames, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "atituiset-skills",
+      "source": "./",
+      "description": "Skills for producing bilingual (zh+en) videos with HyperFrames: dual projects, edge-tts/Kokoro narration, word-boundary captions, iteration loop, explainer narrative toolkit.",
+      "category": "video",
+      "keywords": [
+        "video",
+        "bilingual",
+        "hyperframes",
+        "explainer",
+        "captions"
+      ]
+    }
+  ]
+}

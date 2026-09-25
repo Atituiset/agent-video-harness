@@ -1,0 +1,7 @@
+{
+  "name": "atituiset-skills",
+  "skills": [
+    "./skills/video/bilingual-video",
+    "./skills/video/bilingual-tech-explainer"
+  ]
+}

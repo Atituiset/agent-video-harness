@@ -2,45 +2,61 @@
 
 **[中文文档](README.zh-CN.md)** · English
 
-My personal agent-skills collection. Install any skill with the skills CLI: `npx skills add Atituiset/skills --skill <name>`.
+Agent skills that turn real production experience into repeatable workflows. Plain Markdown + CLI scripts, composable, agent-agnostic — they run on Kimi Code, Claude Code, OpenCode, Codex, or anything that can read a file and run a shell.
+
+The current focus is **bilingual (zh+en) video production with HyperFrames** — born from shipping real explainer videos, not from theorizing about them.
+
+## Installation (30-second setup)
+
+**Any agent** (via the [skills CLI](https://github.com/vercel-labs/skills)):
+
+```bash
+npx skills add Atituiset/skills
+```
+
+Pick the skills you want and which agents to install them on. To grab one directly:
+
+```bash
+npx skills add Atituiset/skills --skill bilingual-tech-explainer
+```
+
+**Claude Code plugin**:
+
+```
+/plugin marketplace add Atituiset/skills
+/plugin install atituiset-skills
+```
+
+**Manual** (you own the files, nothing updates behind your back):
+
+```bash
+cp -r skills/video/bilingual-video ~/.agents/skills/          # Kimi Code / generic
+cp -r skills/video/bilingual-video ~/.claude/skills/          # Claude Code
+cp -r skills/video/bilingual-video ~/.config/opencode/skills/ # OpenCode
+```
+
+## Why these skills exist
+
+Producing a video with an agent is easy to start and painful to finish. These are the failure modes that kept recurring, and the skills that encode their fixes:
+
+**#1: The two languages fight each other.** One timeline parameterized for zh+en looks efficient — until Chinese narration runs 15% longer and every reveal is mistimed in one language. The fix is boring and decisive: **two independent projects**, each timed to its own native TTS word boundaries. No Whisper alignment, no uniform rescaling.
+
+**#2: The video feels like a rushed slideshow.** Every frame opens on a blank canvas while the official 0.5s transition lands on its head, and nothing connects scene to scene. The fix is a **continuity kit**: a persistent evolution rail across the whole film, a stage skeleton visible within the first 0.45s of every frame, and wall cards that visualize the narrative setup.
+
+**#3: Iteration costs a full rebuild.** Changing one line of script meant regenerating everything. The fix is a **single-line loop**: re-record only that line, re-sync durations, re-time only that frame, rebuild only its captions. Minutes, not an evening.
+
+These fixes were extracted from a shipped production — *"From One LLM Call to a Full Harness"*, a 17-frame bilingual explainer (zh 3m33s / en 3m10s) — and condensed into 26 hard-won rules covering arrow geometry, CJK font subsetting, WCAG ghost text, seek-safety and more.
 
 ## Skills
 
-### bilingual-video
+### [video](skills/video/)
 
-The general layer for **any bilingual (zh+en) HyperFrames video** — dual independent projects, edge-tts/Kokoro narration with word-boundary captions, the single-line iteration loop, publishing conventions, 26 universal pitfalls. [README](skills/bilingual-video/README.md)
+| Skill | What it does |
+|---|---|
+| [bilingual-video](skills/video/bilingual-video/) | The general layer for **any** bilingual HyperFrames video — dual projects, narration + word-boundary captions, iteration loop, publishing conventions, 26 universal pitfalls. |
+| [bilingual-tech-explainer](skills/video/bilingual-tech-explainer/) | Turns a technical article into a bilingual explainer for programmers — wall→fix narrative spine, continuity kit, teaching blueprints. Depends on `bilingual-video` plus the official [`faceless-explainer`](https://github.com/heygen-com/hyperframes) workflow. |
 
-### bilingual-tech-explainer
-
-Turns technical articles into **bilingual explainer videos for programmers** — narrative spine (wall → fix), continuity kit, teaching blueprints. Depends on `bilingual-video`. [README](skills/bilingual-tech-explainer/README.md)
-
-An open-source workflow that turns technical articles into **bilingual (zh+en) explainer videos for programmers**. Built on [HyperFrames](https://hyperframes.heygen.com) (HTML-as-video) + edge-tts/Kokoro narration + native word-boundary captions. The entire pipeline is drivable by any coding agent (Kimi Code / Claude Code / OpenCode / Codex …).
-
-Proven in production: *"From One LLM Call to a Full Harness"* — a 17-frame bilingual explainer (zh 3m33s / en 3m10s) covering the LLM → context → ReAct → tool-calling → memory → Harness evolution, eight real harnesses (Pi / OpenCode / Codex / Hermes / Claude Code / DeepSeek Harness / Grok Build / Kimi Code), and a nine-way positioning map.
-
-## Features
-
-- **Independent bilingual projects** — zh/en timelines stay separate; Chinese narration via edge-tts (Xiaoxiao), English via Kokoro (af_sky); captions aligned from native TTS word boundaries, no Whisper needed
-- **Continuity toolkit** — a persistent evolution rail, stage scaffolding within the first 0.45s of every frame, and a "wall card" motif; cures the rushed-slideshow feel
-- **Narrative spine** — wall → fix: every engineering layer appears *for a reason*
-- **26 hard-won rules** — arrow geometry, CJK font subsetting, WCAG ghost text, seek-safety, and more (`references/pitfalls.md`)
-- **Agent-agnostic** — the skill is plain Markdown + CLI scripts; any agent that can run a shell can drive it (verified with Kimi Code and OpenCode)
-
-## Install
-
-Prerequisite: the `npx hyperframes` CLI (see HyperFrames docs).
-
-```bash
-# via the skills CLI (recommended)
-npx skills add Atituiset/skills --skill bilingual-tech-explainer
-
-# or copy manually
-cp -r skills/bilingual-tech-explainer ~/.agents/skills/          # Kimi Code / generic
-cp -r skills/bilingual-tech-explainer ~/.claude/skills/          # Claude Code
-cp -r skills/bilingual-tech-explainer ~/.config/opencode/skills/ # OpenCode
-```
-
-Also make sure the official workflow is installed: `npx skills add heygen-com/hyperframes --skill faceless-explainer`.
+More domains are coming; the layout and its growth rules live in [skills/README.md](skills/README.md).
 
 ## Usage
 
@@ -48,24 +64,23 @@ Tell your agent:
 
 > Read the bilingual-tech-explainer skill and turn this article (path/URL) into a bilingual explainer video for Bilibili and YouTube. Working directory: videos/<project>.
 
-The agent runs the official faceless-explainer pipeline (scaffold → design preset → storyboard & script → narration → per-frame builders → assembly → checks → render); the skill supplies the delta layer.
+The agent runs the official faceless-explainer pipeline (scaffold → design preset → storyboard & script → narration → per-frame builders → assembly → checks → render); the skills supply the delta layer.
 
-The skill directory is fully self-contained and installs with everything it needs:
+## Repository conventions
 
-| Path | What it is |
-|---|---|
-| `scripts/gen-voice.py` | edge-tts narration with native word boundaries → `audio_meta.json` |
-| `recipes/agent-harness-explainer/` | Frozen recipe: code-editorial design preset + storyboard skeleton |
-| `examples/reference-case-frame.html` | Reference case-frame implementation (see `examples/README.md`) |
-| `references/pitfalls.md` | 26 production-tested rules — have any agent read this first |
+- **Layout**: `skills/<category>/<skill>/`, governed by [ADR-0001](.agents/adr/0001-skill-directory-layout.md). Categories grow when real skills need them — no empty scaffolding.
+- **Lifecycle**: incubating skills live in `skills/in-progress/`; retired skills move to `skills/deprecated/`, never deleted.
+- **Project layout produced by the video skills**:
 
-## Project layout convention
+  ```
+  videos/<name>-zh/   # Chinese project (build first, full pipeline)
+  videos/<name>-en/   # English project (copy zh frames → translate → re-time to word boundaries)
+  ```
 
-```
-videos/<name>-zh/   # Chinese project (build first, full pipeline)
-videos/<name>-en/   # English project (copy zh frames → translate → re-time to word boundaries)
-```
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Decisions that change conventions are recorded as ADRs in [.agents/adr/](.agents/adr/).
 
 ## License
 
-MIT (see LICENSE). Third-party font files under `examples/assets/fonts/` keep their original licenses (EB Garamond / Inter / JetBrains Mono / Noto Sans SC — all OFL).
+MIT (see [LICENSE](LICENSE)). Third-party font files under `skills/video/bilingual-tech-explainer/examples/assets/fonts/` keep their original licenses (EB Garamond / Inter / JetBrains Mono / Noto Sans SC — all OFL).
