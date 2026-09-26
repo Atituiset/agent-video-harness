@@ -4,6 +4,22 @@ All notable changes to this project are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2026-09-26
+
+### Added
+
+- Pitfalls 34–40, from the second production's finishing run:
+  - 34 (Caption style): official `captions.mjs` 2–4-word cap violates rule 32
+    for EN — patch a copy (SILENCE_GAP 0.18→0.55, wordCap→12), build, restore.
+  - 35–37 (EN derivation gate): re-assemble index after copying frames;
+    CJK-scan all frames before render; translation width expansion breaks
+    absolute layouts — reposition, don't allow-overlap.
+  - 38–40 (Agent-run operations): non-interactive runs need auto-approve for
+    external paths; invoke pipeline scripts via realpath (symlinked skill dirs
+    silently no-op); long autonomous runs stall — bounded stages, `--continue`,
+    verify by filesystem mtimes.
+- `bilingual-video` SKILL.md §1 now points at the EN derivation gate.
+
 ## [0.3.1] - 2026-09-26
 
 ### Added

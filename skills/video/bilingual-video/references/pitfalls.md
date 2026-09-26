@@ -15,6 +15,7 @@ All rules distilled from one full production run (long technical article → bil
 31. Captions are plain text overlaid on the frame — no background pill/box. If legibility needs help, use a subtle text shadow, never a panel.
 32. Caption groups are full phrases / breath groups (one sentence segment per line), not 2–4-word fragments — fragment captions flicker and read as rushed.
 33. Never underline the currently-spoken word; highlight with accent color or weight if at all — underline reads as a hyperlink.
+34. The official `captions.mjs` caps groups at 2–4 words (`wordCap` by density) — that violates rule 32, and English always hits the smallest cap. Before building EN captions, patch a copy of the script (`SILENCE_GAP` 0.18→0.55, `wordCap`→12), build, then restore the original file. Never ship the 2–4-word default for EN.
 
 ## Composition & timeline
 
@@ -55,3 +56,15 @@ All rules distilled from one full production run (long technical article → bil
 28. The wall→fix spine is scaffolding, not chrome: introduce each wall as a natural question or pain ("but here's the problem —"), never narrate mechanical labels like "boundary N". Wall cards appear once per layer opening, subtly.
 29. Pivot sentences between knowledge points are mandatory; where the blueprint allows, transform a shared stage instead of hard-cutting.
 30. Don't compress the storyboard into fewer frames — compression reads as a rushed slideshow (赶场). Budget ~15–20s per frame, one core idea per frame, ≥3min total for multi-layer topics; reveals fill each frame's full duration and every frame ends on a held beat.
+
+## EN derivation gate
+
+35. After copying frames into the EN project, re-run `assemble-index` + `transitions inject` — a stale `index.html` referencing renamed/deleted frames fails the render at compile time. And rebuild captions **before** assembling: the captions track is keyed on `compositions/captions.html` existing.
+36. Never render EN before a CJK scan: `grep -cP '[\x{4e00}-\x{9fff}]' compositions/frames/*.html` must come back zero. Partial translation (later frames left Chinese) is the most common EN defect — agents translate the first frames and run out of steam.
+37. Translation expands text width (自回归 → `autoregressive` is ~4×) and breaks absolute-positioned layouts — badges and labels collide. After translating, re-run `check` and expect overlap errors; reposition or shrink the element, don't silence them with `data-layout-allow-overlap`.
+
+## Agent-run operations
+
+38. Non-interactive agent runs (e.g. `opencode run`) auto-reject file access outside the working directory — copying fonts/scripts from skill dirs dies mid-pipeline. Use auto-approve (`opencode run --auto`) for full-pipeline jobs.
+39. Invoke pipeline scripts via their **realpath**: skill dirs are often symlinked (`~/.config/opencode/skills/x` → `~/.claude/skills/x`), and under a symlink `process.argv[1] !== import.meta.url`, so the script's main block is silently skipped — exit 0, no output, no files written. Debug symptom: a pipeline script that "does nothing".
+40. Long autonomous agent runs stall (small/free models especially) — typically after hours of good progress, in a long unstructured phase. Split the pipeline into bounded stages, resume stalled sessions with `--continue` (state is on disk), and judge progress by filesystem mtimes, never by the agent's own report.

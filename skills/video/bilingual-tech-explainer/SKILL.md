@@ -5,7 +5,7 @@ description: Turn a technical article, research notes, or docs into a bilingual 
 
 # Bilingual tech explainer (article → zh+en explainer film)
 
-**Dependencies**: this repo's `bilingual-video` skill (the bilingual production general layer: dual projects, narration & captions, iteration loop, publishing conventions, 33 pitfalls — read its `references/pitfalls.md` first) + the official `/faceless-explainer` workflow (`npx skills add heygen-com/hyperframes --skill faceless-explainer`). This skill defines only the explainer-specific narrative and visual layers.
+**Dependencies**: this repo's `bilingual-video` skill (the bilingual production general layer: dual projects, narration & captions, iteration loop, publishing conventions, 40 pitfalls — read its `references/pitfalls.md` first) + the official `/faceless-explainer` workflow (`npx skills add heygen-com/hyperframes --skill faceless-explainer`). This skill defines only the explainer-specific narrative and visual layers.
 
 Bundled assets (`<SKILL_DIR>` = this skill's directory):
 - `recipes/agent-harness-explainer/` — frozen recipe (code-editorial design preset + BRIEF skeleton + storyboard skeleton), adoptable via the official `recipe.mjs use` or by copying `frame.md` manually

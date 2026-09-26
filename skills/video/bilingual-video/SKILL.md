@@ -1,6 +1,6 @@
 ---
 name: bilingual-video
-description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 33-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
+description: The general layer for producing ANY bilingual (zh+en) video with HyperFrames, independent of video type — dual independent projects, edge-tts (Chinese) / Kokoro (English) narration with native word-boundary captions, the single-line re-record iteration loop, publishing conventions, and a 40-rule universal pitfalls checklist. Every route (explainer / promo / recut / motion-graphics …) passes through this layer first. Use when producing any bilingual (zh+en) video with HyperFrames, regardless of video type. 任何 HyperFrames 视频的中英双语生产通用层，与视频类型无关。
 ---
 
 # Bilingual video production — the general layer (any video type)
@@ -11,7 +11,7 @@ For technical explainer videos, use this repo's `bilingual-tech-explainer` direc
 
 ## 1. Dual projects, never parameterized
 
-Build two independent projects, `videos/<name>-zh` and `videos/<name>-en`. Narration length can differ by up to 15% between languages; independent timelines are the only way to avoid contortions. Order: **build zh end-to-end to render first; then the EN project copies zh's `compositions/frames/`, translates frame by frame, and re-times to English word boundaries** — reveals must re-anchor to the word actually being spoken; uniform rescaling is forbidden. Mirrored edits are done twice and verified twice.
+Build two independent projects, `videos/<name>-zh` and `videos/<name>-en`. Narration length can differ by up to 15% between languages; independent timelines are the only way to avoid contortions. Order: **build zh end-to-end to render first; then the EN project copies zh's `compositions/frames/`, translates frame by frame, and re-times to English word boundaries** — reveals must re-anchor to the word actually being spoken; uniform rescaling is forbidden. Mirrored edits are done twice and verified twice. Before the EN render, pass the derivation gate (pitfalls 35–37): re-assemble the index, CJK-scan every frame, re-run `check` for width-expansion overlaps.
 
 ## 2. Narration & captions (type-independent)
 
@@ -36,6 +36,6 @@ Edit one line → re-record only that line (merge mode) → `sync-durations` →
 - Bilibili: 科技→计算机技术 category, description with chapter timeline + asset credits, submit as original. YouTube: Chapters timeline, Science & Technology category, tick Altered content (synthetic voice disclosure).
 - **A human must listen to the narration before publishing** (especially mixed zh/en words) — the model cannot hear it itself.
 
-## 5. Pitfalls checklist (30 rules, all universal)
+## 5. Pitfalls checklist (40 rules, all universal)
 
 `<SKILL_DIR>/references/pitfalls.md`: five categories — narration/captions, composition/timeline, animation/seek-safety, text/contrast, workflow/collaboration. Read it before dispatching tasks to any agent (or doing it yourself).
