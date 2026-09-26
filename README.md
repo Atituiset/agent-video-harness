@@ -43,7 +43,7 @@ cp -r skills/video/bilingual-video ~/.config/opencode/skills/ # OpenCode
 
 [![Four stages, one line — a bilingual explainer produced end-to-end by these skills](docs/assets/demo-cover-en.png)](https://www.youtube.com/watch?v=K8Yn8pRAOAM)
 
-**[From one neuron (1943) to the inference race (2026)](https://www.youtube.com/watch?v=K8Yn8pRAOAM)** — a 14-frame bilingual explainer (en 3m49s / zh 3m51s) produced end-to-end by an agent running `bilingual-tech-explainer`: human-scenario opening, wall→fix narrative spine, phrase-level captions with no background pill. Chinese cut on Bilibili: _(link coming)_.
+**[From one neuron (1943) to the inference race (2026)](https://www.youtube.com/watch?v=K8Yn8pRAOAM)** — a 14-frame bilingual explainer (en 3m49s / zh 3m51s) produced end-to-end by an agent running `bilingual-tech-explainer`: human-scenario opening, wall→fix narrative spine, phrase-level captions with no background pill. Chinese cut on Bilibili: **[从 1943 年的一个神经元，到 2026 年的推理效率竞赛](https://www.bilibili.com/video/BV1HLhR6zESm/)**.
 
 ## Why these skills exist
 

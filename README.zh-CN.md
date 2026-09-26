@@ -43,7 +43,7 @@ cp -r skills/video/bilingual-video ~/.config/opencode/skills/ # OpenCode
 
 [![四个阶段，一条线——由本仓库技能端到端产出的双语科普视频](docs/assets/demo-cover-en.png)](https://www.youtube.com/watch?v=K8Yn8pRAOAM)
 
-**[从 1943 年的一个神经元，到 2026 年的推理效率竞赛](https://www.youtube.com/watch?v=K8Yn8pRAOAM)**——14 帧双语科普片（en 3m49s / zh 3m51s），agent 运行 `bilingual-tech-explainer` 端到端产出：人话场景开场、撞墙→补墙叙事、无底版短语级字幕。中文版（B站）：_链接待补_。
+**[从 1943 年的一个神经元，到 2026 年的推理效率竞赛](https://www.youtube.com/watch?v=K8Yn8pRAOAM)**——14 帧双语科普片（en 3m49s / zh 3m51s），agent 运行 `bilingual-tech-explainer` 端到端产出：人话场景开场、撞墙→补墙叙事、无底版短语级字幕。中文版（B站）：**[从 1943 年的一个神经元，到 2026 年的推理效率竞赛](https://www.bilibili.com/video/BV1HLhR6zESm/)**。
 
 ## 为什么做这些技能
 
