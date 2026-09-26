@@ -39,6 +39,12 @@ cp -r skills/video/bilingual-video ~/.claude/skills/          # Claude Code
 cp -r skills/video/bilingual-video ~/.config/opencode/skills/ # OpenCode
 ```
 
+## Demo
+
+[![Four stages, one line — a bilingual explainer produced end-to-end by these skills](docs/assets/demo-cover-en.png)](https://www.youtube.com/watch?v=K8Yn8pRAOAM)
+
+**[From one neuron (1943) to the inference race (2026)](https://www.youtube.com/watch?v=K8Yn8pRAOAM)** — a 14-frame bilingual explainer (en 3m49s / zh 3m51s) produced end-to-end by an agent running `bilingual-tech-explainer`: human-scenario opening, wall→fix narrative spine, phrase-level captions with no background pill. Chinese cut on Bilibili: _(link coming)_.
+
 ## Why these skills exist
 
 Producing a video with an agent is easy to start and painful to finish. These are the failure modes that kept recurring, and the skills that encode their fixes:
